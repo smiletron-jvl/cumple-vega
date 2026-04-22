@@ -512,7 +512,7 @@
       <span class="info-icon">📍</span>
       <div class="info-content">
         <div class="info-label">Lugar</div>
-        <div class="info-value">VallePark Campanillas<br>C/ Luís Salazar 14</div>
+        <a href="https://maps.app.goo.gl/whLFGJSTzEvYoxwC6" target="_blank" style="color:rgba(220,245,255,0.95);text-decoration:underline;text-decoration-color:rgba(140,210,255,0.4);font-size:15px;font-weight:600;font-family:'Nunito',sans-serif;">VallePark Campanillas<br>C/ Luís Salazar 14</a>
       </div>
     </div>
   </div>
@@ -520,7 +520,7 @@
   <!-- RSVP -->
   <div class="rsvp-section">
     <div class="rsvp-text">✦ Confirmar asistencia ✦</div>
-    <div class="rsvp-contact">WhatsApp - 646946152</div>
+    <a href="https://wa.me/34646946152" target="_blank" style="color:rgba(200,240,255,0.9);font-size:14px;font-weight:600;font-family:'Nunito',sans-serif;text-decoration:underline;text-decoration-color:rgba(140,210,255,0.4);">WhatsApp - 646946152</a>
   </div>
 
   <!-- Bottom snowflakes -->
@@ -595,20 +595,23 @@
       ctx.restore();
     }
 
-    function loop() {
+    let lastTime = null;
+    function loop(timestamp) {
+      const delta = lastTime ? Math.min((timestamp - lastTime) / 16.67, 3) : 1;
+      lastTime = timestamp;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const f of flakes) {
         drawFlake(f);
-        f.y     += f.speed;
-        f.x     += f.drift;
-        f.angle += f.spin;
+        f.y     += f.speed * delta;
+        f.x     += f.drift * delta;
+        f.angle += f.spin  * delta;
         if (f.y > canvas.height + 10) {
           Object.assign(f, newFlake(false));
         }
       }
       requestAnimationFrame(loop);
     }
-    loop();
+    requestAnimationFrame(loop);
   });
 </script>
 </body>
